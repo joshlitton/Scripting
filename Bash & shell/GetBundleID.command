@@ -1,5 +1,11 @@
+#!/bin/sh
+
+# Get your app IDs from the end of the apps AppStore URL 
+# ie. https://apps.apple.com/au/app/microsoft-word/id586447913 
+# 586447913 
+
 ids=(
-"1549488238"   ## Experience Nanup
+"586447913"   ## Microsoft Word iOS
 )
 # echo ${ids[@]}
 

@@ -1,0 +1,11 @@
+# Copy members from group to group
+# Group sAMAccountNames
+$sourceGroup = "School allocated laptop staff"
+$destGroup = "Adobe_Staff_Named"
+
+$members = Get-ADGroupMember -Identity  "$($sourceGroup)"
+
+foreach ($user in $members){
+    #Write-Host "Add $($user.sAMAccountName) to group $($destGroup)"
+    try {Add-ADGroupMember -Identity "$($destGroup)" -Members "$($user.SamAccountName)"} Catch {Write-Error "Failed to add $($user.SamAccountName)"}
+}

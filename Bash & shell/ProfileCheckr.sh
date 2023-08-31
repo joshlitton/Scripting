@@ -1,19 +1,19 @@
 #!/bin/zsh
 
-# VERSION:  1.0 
+# VERSION:  1.1 
 # AUTHOR:   Josh Litton
 # Currently only supports Device-Based profiles
 
 profileName="${4}"		          # Profile Name:
 #profileName="WaitForProfile"    # For Testing
 runMode="${5}"                  # Wait for profile to be: [installed (default)/ uninstalled]
-#runMode="installed"         # Default = installed if nothing specified
+${runMode:="installed"}        # Default = installed if nothing specified
 timer=${6}				              # How long to wait (in seconds
-#timer=120                    # Default = 60s if nothing specified
+${timer:=60}                    # Default = 60s if nothing specified
 
 if [[ -z $profileName ]]; then
 	echo "Profile Name cannot be blank, exiting"
-	exit 2
+	exit 9
 else
   i=0
   if [[ "$runMode" == "uninstalled" ]]; then
@@ -22,7 +22,7 @@ else
       ((i++))
       if (( $i > $timer )); then
         echo "Reached specified timer: ${timer}s"
-        exit 2
+        exit 4
       else 
         echo "Loop $i"
       fi
@@ -34,7 +34,7 @@ else
       ((i++))
       if (( $i > $timer )); then
         echo "Reached specified timer: ${timer}s"
-        exit 2
+        exit 4
       else 
         echo "Loop $i"
       fi

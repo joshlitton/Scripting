@@ -3,7 +3,7 @@
 path="/Library/Management/json"
 mkdir -p "$path"
 
-tee "$path" << EOS
+tee "$path/swiftDialog_JamfConnectMigration.json" << EOS
 {
 	"title" : "Authentication Migration",
     "messagefont" : "size=16",

@@ -1,0 +1,6 @@
+13:55:47 INFO Starting Script 
+13:55:47 INFO Registering Bearer Token for script run 
+13:55:48 INFO Updating Authorization to use Token 
+13:55:49 DEBUG Extracted regex pattern from saved search: ^\w{2,} [a-zA-z|'| |-]{2,} - [0-9]{4} - SCT[0-9]{5} 
+13:55:49 INFO Found 0 devices, processing... 
+13:55:49 INFO Script finished running. 

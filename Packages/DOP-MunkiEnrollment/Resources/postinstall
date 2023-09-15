@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Applies Munki Settings
+
+defaults write /Library/Preferences/ManagedInstalls SoftwareRepoURL "http://DOPMAC12100/munki_repo"
+defaults write /Library/Preferences/ManagedInstalls ClientIdentifier "dpi_clients"
+touch /Users/Shared/.com.googlecode.munki.checkandinstallatstartup
+
+exit 0

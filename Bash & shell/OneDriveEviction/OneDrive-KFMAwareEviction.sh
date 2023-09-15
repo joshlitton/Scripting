@@ -55,30 +55,33 @@ for store in ${MappedStorage[@]}; do
 		
 		folders=($(find "${store}" -depth 1 -type d))
 		logger "Found $(echo ${#folders[@]}) folders in root of $store" 3
-		files=($(find "${store}" -depth 1 -type f))
+		files=($(find "${store}" -depth 1 -type f | grep -E '[a-zA-Z0-9]{1,}[.][a-zA-Z0-9]{1,}' | grep -v -E '[.]url$'))
 		logger "Found $(echo ${#files[@]}) files in root of $store" 3
 	
 		for folder in ${folders[@]}; do
 			logger "Processing: $folder" 3
-			echo "$folder == ${store}/Desktop"
 				if [[ "$folder" == "${store}/Desktop" ]]; then
 					if [[ $desktopMoved == true && $materialize == true ]]; then
 						logger "Desktop is synced to store: $store" 3
-						logger "Running materialize on: $store/Desktop" 3
-						echo 'su - ${loggedInUser} -c "$fpctl materialize '"${folder}"' >> "$logFile"'
+						logger "Building list of files: $store/Desktop" 3
+						itemsToMaterialize=($(su - ${loggedInUser} -c "$fpctl materialize "${folder}"" | grep -E '[a-zA-Z0-9]{1,}[.][a-zA-Z0-9]{1,}'))
+						for item in ${itemsToMaterialize[@]}; do
+							logger "Attempting to materialize ${folder}/$item" 4
+							su - ${loggedInUser} -c "$fpctl materialize \"${folder}/$item\""
+						done
 					else
 						logger "Desktop has not been moved or Materialize flag not enabled." 2
 						logger "Evicting: ${folder}" 3
 						echo 'su - ${loggedInUser} -c "$fpctl evict -n '"${folder}"' >> "$logFile"'
 					fi
 				else 
-					logger "Evicting: ${folder}" 3
-					echo 'su - ${loggedInUser} -c "$fpctl evict -n '"${folder}"' >> "$logFile"'
+					logger "Evicting folder: ${folder}" 3
+					su - ${loggedInUser} -c "$fpctl evict -n \"${folder}\""
 				fi
 		done
 		for file in ${files[@]}; do 
-			logger "Evicting: ${file}" 3
-			echo 'su - ${loggedInUser} -c "$fpctl evict '"${file}"' >> "$logFile"'
+			logger "Evicting file: ${file}" 3
+			su - ${loggedInUser} -c "$fpctl evict \"${file}\""
 		done
 	fi
 done

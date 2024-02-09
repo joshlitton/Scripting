@@ -1,0 +1,37 @@
+#!/bin/zsh
+
+dmgFile="/private/var/tmp/amp_Protect.dmg"
+logFile="/Library/IntuneScripts/Logs/cisco_amp_install.log"
+
+# If our log file directory doesn't exist, create it.
+if [[ -d ${logFile%/*} ]]; then
+	echo "exists"
+else
+	echo "doesn't"
+	mkdir -p "${logFile%/*}"
+fi
+
+# Mount the DMG and save the mounted volume path to a variable
+mountedVolume=$(/usr/bin/hdiutil mount "$dmgFile" | grep -i "/dev/" | awk {'first = $1; $1=""; print $0'} | sed 's/^ //g')
+echo "Mounted Volume: ${mountedVolume}" >> "$logFile"
+# Run PKG inside mounted DMG
+pkgs=$(find "$mountedVolume" -name "*.pkg" -exec basename {} \;)
+echo "Packages: $pkgs" >> "$logFile"
+
+# Loop through any .pkg files and install onto root drive
+for pkg in $pkgs; do
+	echo "Running ${pkg}…" >> "$logFile"
+	/usr/sbin/installer -pkg "${mountedVolume}/${pkg}" -target /
+done
+
+sleep 1
+# Unmount the DMG
+/usr/bin/hdiutil unmount "$mountedVolume" 
+sleep 0.5 
+# Delete the DMG
+/bin/rm -f "$dmgFile"
+
+exit 0		## Success
+exit 1		## Failure
+
+

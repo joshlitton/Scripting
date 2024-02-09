@@ -1,10 +1,12 @@
 #!/bin/bash
+# Written by Josh Litton
+# Copyright (c) Catalytic IT 2023
 
 # Our Binary: 
 dockutil="/usr/local/bin/dockutil"
 dockItems=("$4")                        # Application full pathways separated by a ";" (ie. /Applications/Microsoft Edge.app;/Applications/Microsoft Word.app)
-selfServiceFlag="${5:-"true"}"          # Add Self Service app to Dock? (true/false) Default=true and will set to beginning of dock, after finder. 
-sysPrefsFlag="${6:-"true"}"             # Add System Settings to Dock? (true/false) Default=true and will set position to end of dock
+selfServiceFlag="${5:-"true"}"          # Add Self Service app to Dock? [ true (default) | false ] Adds to beginning of dock, after finder. 
+sysPrefsFlag="${6:-"true"}"             # Add System Settings to Dock? [ true (default) | false ] Adds to end of dock
 
 # Clear the dock
 $dockutil --remove all --allhomes '/System/Library/User Template/Engligh.lproj' --no-restart

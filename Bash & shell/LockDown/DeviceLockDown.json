@@ -1,0 +1,8 @@
+{
+  "title": "System Notice",
+  "message": "This is a fullscreen SwiftDialog window.",
+  "button1text": "Dismiss",
+  "position": "center",
+  "ontop": true,
+  "fullscreen": true
+}

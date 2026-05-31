@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>au.com.citwa.devicelockdown</string>
+
+    <!-- Run script as root -->
+    <key>RunAtLoad</key>
+    <true/>
+
+    <!-- Relaunch script every 60 seconds -->
+    <key>StartInterval</key>
+    <integer>60</integer>
+
+    <!-- Ensure script runs after a crash or termination -->
+    <key>KeepAlive</key>
+    <true/>
+
+    <!-- Run the script -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Library/Management/Scripts/DeviceLockDown.sh</string>
+    </array>
+
+    <!-- Run as root -->
+    <key>UserName</key>
+    <string>root</string>
+
+    <!-- Standard output/error logs (optional) -->
+    <key>StandardOutPath</key>
+    <string>/var/log/DeviceLockDown.log</string>
+    <key>StandardErrorPath</key>
+    <string>/var/log/DeviceLockDown-error.log</string>
+</dict>
+</plist>

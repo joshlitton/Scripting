@@ -1,11 +1,11 @@
 #!/bin/sh
 
 # Get your app IDs from the end of the apps AppStore URL 
-# ie. https://apps.apple.com/au/app/microsoft-word/id586447913 
+# ie. https://apps.apple.com/au/app/microsoft-word/id1500855883 
 # 586447913 
 
 ids=(
-"1475674905"
+"1500855883"
 )
 # echo ${ids[@]}
 
